@@ -1,0 +1,14 @@
+@if (adminRoute()) {
+  <router-outlet />
+} @else {
+  <app-header />
+  <main>
+    <router-outlet />
+  </main>
+  <app-footer />
+  <app-offer-modal />
+  <div class="floating-actions" aria-label="Acciones rápidas">
+    <app-scroll-top />
+    <app-whatsapp-button />
+  </div>
+}

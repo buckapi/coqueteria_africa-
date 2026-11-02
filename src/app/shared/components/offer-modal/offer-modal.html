@@ -1,0 +1,42 @@
+@if (open()) {
+  <div
+    id="offerModal"
+    class="cs_offer_modal active"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="offer-title"
+  >
+    <button
+      type="button"
+      class="cs_offer_modal_overlay"
+      aria-label="Cerrar ventana"
+      (click)="close()"
+    ></button>
+    <div class="cs_offer_modal_in">
+      <button
+        type="button"
+        class="cs_offer_modal_close"
+        aria-label="Cerrar ventana"
+        (click)="close()"
+      >
+        <i class="ri-close-line"></i>
+      </button>
+      <div
+        class="cs_offer_modal_thumb"
+        style="background-image: url('assets/img/logocoqueteria.png')"
+      ></div>
+      <div class="cs_offer_modal_content">
+        <span class="cs_offer_badge">Coquetería Africa</span>
+        <h2 id="offer-title" class="cs_offer_title">Descubre algo especial</h2>
+        <p class="cs_offer_subtitle">
+          Conoce nuestras creaciones hechas a mano y encuentra detalles que enamoran.
+        </p>
+        <div>
+          <a routerLink="/" fragment="creaciones" class="cs_btn_style_1" (click)="close()"
+            >Explorar creaciones</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+}

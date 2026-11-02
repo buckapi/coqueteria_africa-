@@ -1,0 +1,106 @@
+:host {
+  display: block;
+}
+.cs_site_header .cs_topbar {
+  background: var(--brand-primary);
+  color: #fff;
+  border: 0;
+}
+.cs_site_header .cs_topbar_in {
+  min-height: 34px;
+}
+.cs_site_header .cs_topbar_notice_text {
+  margin: 0;
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+.cs_site_header .cs_topbar_social a,
+.cs_site_header .cs_topbar_links a {
+  color: #fff;
+  font-size: 11px;
+}
+.cs_site_header .cs_topbar_links a:hover,
+.cs_site_header .cs_topbar_social a:hover {
+  color: var(--brand-secondary);
+}
+.cs_site_header .cs_main_header {
+  border-bottom: 1px solid var(--color-border);
+}
+.cs_site_header .cs_main_header_in {
+  height: 92px;
+}
+.cs_site_header .cs_site_branding img,
+.cs_site_header .cs_site_brand img {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  padding-top: 5px;
+}
+.cs_site_header .cs_main_header_center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.cs_site_header .cs_nav .cs_nav_list {
+  gap: clamp(18px, 3vw, 42px);
+}
+.cs_site_header .cs_nav .cs_nav_list > li > a {
+  padding: 10px 0;
+  color: var(--brand-primary);
+  font: 500 13px var(--primary-font);
+}
+.cs_site_header .cs_nav .cs_nav_list > li > a::after {
+  background-color: var(--brand-primary);
+}
+.cs_site_header .cs_main_header_right {
+  gap: 16px;
+}
+.cs_site_header .cs_header_action {
+  color: var(--brand-primary);
+}
+.cs_site_header .cs_action_badge {
+  background: var(--brand-primary);
+  color: #fff;
+}
+@media (max-width: 1199px) {
+  .cs_site_header .cs_main_header_center {
+    flex: 0;
+  }
+  .cs_site_header .cs_main_header_in {
+    height: 74px;
+  }
+  .cs_site_header .cs_site_branding img,
+  .cs_site_header .cs_site_brand img {
+    width: 70px;
+    height: 70px;
+  }
+  .cs_site_header .cs_topbar_links {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .cs_site_header .cs_topbar_notice_text {
+    font-size: 10px;
+  }
+  .cs_site_header .cs_topbar_social {
+    display: none;
+  }
+  .cs_site_header .cs_topbar_in {
+    justify-content: center;
+  }
+  .cs_site_header .cs_main_header_in {
+    height: 70px;
+  }
+  .cs_site_header .cs_site_branding img {
+    width: 64px;
+    height: 64px;
+  }
+  .cs_site_header .cs_main_header_right {
+    gap: 9px;
+  }
+  .cs_site_header .cs_main_header_right .cs_has_badge.mobile_hide {
+    display: none;
+  }
+}

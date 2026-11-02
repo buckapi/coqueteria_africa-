@@ -1,0 +1,204 @@
+:host {
+  display: block;
+}
+.banner-form {
+  display: grid;
+  gap: 22px;
+}
+.banner-form h3 {
+  margin: 0;
+}
+.banner-form .admin-primary-button {
+  width: max-content;
+}
+.banner-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.banner-card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: #fff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.banner-card.primary {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(109, 31, 130, 0.12);
+}
+.banner-card-image {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  background: var(--color-surface-soft);
+}
+.banner-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.banner-card-image .admin-state {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: var(--brand-primary);
+  background: #fff;
+}
+.banner-card-body {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+}
+.banner-card-body h3 {
+  margin: 0;
+  font-size: 20px;
+}
+.banner-card-body p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+.banner-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+.banner-card-actions .admin-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  text-decoration: none;
+}
+.banner-card-actions .admin-danger-button,
+.banner-card-actions .admin-secondary-button,
+.banner-card-actions .admin-primary-button {
+  min-height: 38px;
+  padding: 7px 10px;
+  font-size: 12px;
+}
+.banner-card-actions .admin-danger-button {
+  border: 1px solid #e6aeb6;
+}
+.banner-preview {
+  display: grid;
+  gap: 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 18px;
+  background: var(--color-surface-soft);
+}
+.banner-preview-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.banner-preview-heading h3 {
+  margin: 4px 0 0;
+  font-size: 18px;
+}
+.banner-preview-hero {
+  display: grid;
+  min-height: 250px;
+  grid-template-columns: 0.9fr 1.1fr;
+  overflow: hidden;
+  border-radius: 8px;
+  background: linear-gradient(105deg, #f8f4fc 0%, #eadcf2 54%, #d7c6ea 100%);
+}
+.banner-preview-copy {
+  display: flex;
+  z-index: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px;
+}
+.banner-preview-copy > p {
+  margin: 0 0 8px;
+  color: var(--brand-primary);
+  font:
+    600 10px Inter,
+    sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.banner-preview-copy h4 {
+  margin: 0 0 10px;
+  color: var(--brand-dark);
+  font:
+    600 clamp(21px, 2.3vw, 34px)/1.02 'Playfair Display',
+    serif;
+  text-transform: uppercase;
+}
+.banner-preview-copy h4 em {
+  display: block;
+  color: var(--brand-primary);
+  font:
+    400 0.9em/1.05 'Playfair Display',
+    serif;
+  text-transform: none;
+}
+.banner-preview-copy > span {
+  max-width: 320px;
+  color: #4f4054;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.banner-preview-copy button {
+  align-self: flex-start;
+  margin-top: 15px;
+  border: 0;
+  border-radius: 99px;
+  padding: 9px 14px;
+  color: #fff;
+  background: var(--brand-primary);
+  font-size: 10px;
+}
+.banner-preview-copy button b {
+  margin-left: 7px;
+  font-size: 14px;
+}
+.banner-preview-art,
+.banner-preview-art picture,
+.banner-preview-art img {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  object-fit: cover;
+}
+.banner-uploads {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.banner-uploads .admin-upload {
+  min-height: 180px;
+}
+.banner-uploads img {
+  width: 100%;
+  max-height: 180px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+@media (max-width: 650px) {
+  .banner-grid {
+    grid-template-columns: 1fr;
+  }
+  .banner-uploads {
+    grid-template-columns: 1fr;
+  }
+  .banner-preview-hero {
+    grid-template-columns: 1fr;
+  }
+  .banner-preview-art {
+    order: -1;
+  }
+  .banner-preview-art img {
+    min-height: 150px;
+    max-height: 190px;
+  }
+}

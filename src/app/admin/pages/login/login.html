@@ -1,0 +1,39 @@
+<main class="admin-login-page">
+  <section class="admin-login-card" aria-labelledby="login-title">
+    <a routerLink="/" class="admin-login-logo"
+      ><img src="assets/img/logocoqueteria.png" alt="Coquetería Africa"
+    /></a>
+    <span class="admin-eyebrow">Área privada</span>
+    <h1 id="login-title">Bienvenida</h1>
+    <p>Accede para gestionar las creaciones de tu tienda.</p>
+    @if (error()) {
+      <div class="admin-alert admin-alert-error" role="alert">{{ error() }}</div>
+    }
+    <form (ngSubmit)="submit()" #loginForm="ngForm">
+      <label
+        >Correo electrónico<input
+          type="email"
+          name="identity"
+          [(ngModel)]="identity"
+          required
+          autocomplete="username"
+      /></label>
+      <label
+        >Contraseña<input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          autocomplete="current-password"
+      /></label>
+      <button
+        class="admin-primary-button"
+        type="submit"
+        [disabled]="loginForm.invalid || auth.busy()"
+      >
+        {{ auth.busy() ? 'Comprobando...' : 'Iniciar sesión' }}
+      </button>
+    </form>
+    <a routerLink="/" class="admin-back-store">Volver a la tienda</a>
+  </section>
+</main>

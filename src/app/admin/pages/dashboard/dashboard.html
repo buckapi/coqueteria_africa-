@@ -1,0 +1,66 @@
+<section class="admin-page-heading">
+  <div>
+    <span class="admin-eyebrow">Resumen</span>
+    <h2>Tu tienda, en un vistazo</h2>
+  </div>
+  <a routerLink="/admin/productos/nuevo" class="admin-primary-button"
+    ><i class="ri-add-line"></i> Nueva creación</a
+  >
+</section>
+@if (error()) {
+  <div class="admin-alert admin-alert-error">{{ error() }}</div>
+}
+<div class="admin-stat-grid">
+  <article class="admin-stat-card">
+    <span>Total de productos</span><strong>{{ loading() ? '...' : count() }}</strong
+    ><i class="ri-store-2-line"></i>
+  </article>
+  <article class="admin-stat-card admin-stat-published">
+    <span>Publicados</span><strong>{{ loading() ? '...' : count('publicado') }}</strong
+    ><i class="ri-checkbox-circle-line"></i>
+  </article>
+  <article class="admin-stat-card admin-stat-draft">
+    <span>En borrador</span><strong>{{ loading() ? '...' : count('borrador') }}</strong
+    ><i class="ri-draft-line"></i>
+  </article>
+  <article class="admin-stat-card admin-stat-stock">
+    <span>Sin existencias</span
+    ><strong>{{ loading() ? '...' : products().filter((p) => p.stock === 0).length }}</strong
+    ><i class="ri-inbox-line"></i>
+  </article>
+</div>
+<section class="admin-panel">
+  <div class="admin-panel-heading">
+    <div>
+      <h3>Últimas creaciones</h3>
+      <p>Los productos más recientes de tu catálogo.</p>
+    </div>
+    <a routerLink="/admin/productos">Ver catálogo</a>
+  </div>
+  @if (loading()) {
+    <p class="admin-muted">Cargando productos...</p>
+  } @else if (!products().length) {
+    <div class="admin-empty">
+      <i class="ri-store-2-line"></i>
+      <h3>Aún no hay productos</h3>
+      <p>Crea tu primera creación para comenzar a construir el catálogo.</p>
+      <a routerLink="/admin/productos/nuevo" class="admin-primary-button">Agregar producto</a>
+    </div>
+  } @else {
+    <div class="admin-recent-list">
+      @for (product of products().slice(0, 5); track product.id) {
+        <div class="admin-recent-item">
+          <div>
+            <strong>{{ product.name }}</strong
+            ><span>{{ product.category || 'Sin categoría' }}</span>
+          </div>
+          <span
+            class="admin-status"
+            [class.admin-status-published]="product.status === 'publicado'"
+            >{{ product.status }}</span
+          >
+        </div>
+      }
+    </div>
+  }
+</section>

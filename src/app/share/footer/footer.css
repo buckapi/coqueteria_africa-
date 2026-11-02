@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+.cs_footer_style_2 {
+  background: var(--color-surface-soft);
+  color: var(--brand-dark);
+}
+.cs_footer_style_2::before {
+  background: #fff;
+}
+.cs_footer_style_2 .cs_footer_main {
+  background: #fff;
+}
+.cs_footer_style_2 .cs_footer_widget_title,
+.cs_footer_style_2 .cs_footer_links a,
+.cs_footer_style_2 .cs_footer_contact a {
+  color: var(--brand-primary);
+}
+.cs_footer_style_2 .cs_footer_widget p,
+.cs_footer_style_2 .cs_footer_copyright {
+  color: var(--color-text-muted);
+}
+.cs_footer_style_2 .cs_footer_links a:hover,
+.cs_footer_style_2 .cs_footer_contact a:hover {
+  color: var(--brand-dark);
+}
+.cs_footer_style_2 .cs_instagram_style_1 {
+  padding: 45px 0;
+  background: var(--color-surface-soft);
+}
+.cs_footer_style_2 .cs_instagram_style_1 .cs_section_title {
+  color: var(--brand-primary);
+}
+.cs_footer_style_2 .cs_instagram_style_1 .cs_section_subtitle {
+  color: var(--brand-primary);
+}
+.cs_footer_style_2 .cs_footer_bottom {
+  background: #fff;
+}
+.cs_footer_style_2 .cs_footer_bottom::before {
+  background: var(--color-border);
+}
+.cs_footer_style_2 .cs_social_btns_style_1 a {
+  background: var(--brand-primary);
+  color: #fff;
+}
+.cs_footer_style_2 .cs_social_btns_style_1 a:hover {
+  background: var(--brand-secondary);
+  color: var(--brand-primary);
+}

@@ -1,0 +1,161 @@
+<section class="admin-page-heading">
+  <div>
+    <span class="admin-eyebrow">Catálogo</span>
+    <h2>Categorías</h2>
+    <p class="admin-page-description">
+      Organiza las categorías de tus creaciones y administra las imágenes que aparecen en la tienda.
+    </p>
+  </div>
+  @if (isForm) {
+    <a routerLink="/admin/categorias" class="admin-secondary-button">Volver</a>
+  } @else {
+    <a routerLink="/admin/categorias/nueva" class="admin-primary-button">Nueva categoría</a>
+  }
+</section>
+@if (error()) {
+  <div class="admin-alert">{{ error() }}</div>
+}
+@if (notice()) {
+  <div class="admin-alert admin-alert-success">{{ notice() }}</div>
+}
+@if (isForm) {
+  <form class="admin-panel category-form" [formGroup]="form" (ngSubmit)="save()">
+    <h3>{{ id ? 'Editar categoría' : 'Nueva categoría' }}</h3>
+    <div class="admin-form-grid">
+      <label>Nombre *<input formControlName="name" (blur)="slugify()" /></label>
+      <label>Slug *<input formControlName="slug" /></label>
+      <label class="admin-full"
+        >Descripción<textarea formControlName="description" rows="4"></textarea>
+      </label>
+      <label>Orden<input type="number" min="0" formControlName="sortOrder" /></label>
+      <label class="admin-check"><input type="checkbox" formControlName="active" /> Activa</label>
+    </div>
+    <label class="admin-upload category-upload">
+      @if (imagePreview()) {
+        <img [src]="imagePreview()" alt="Vista previa de categoría" />
+      } @else {
+        <i class="ri-image-add-line"></i><span>Seleccionar imagen</span>
+      }
+      <input type="file" accept="image/jpeg,image/png,image/webp" (change)="chooseImage($event)" />
+    </label>
+    <button class="admin-primary-button" type="submit" [disabled]="saving()">
+      {{ saving() ? 'Guardando...' : 'Guardar categoría' }}
+    </button>
+  </form>
+} @else {
+  <section class="admin-panel">
+    <div class="admin-toolbar category-toolbar">
+      <select
+        [ngModel]="categoryStatus()"
+        (ngModelChange)="categoryStatus.set($event)"
+        aria-label="Filtrar categorías por estado"
+      >
+        <option value="">Todas</option>
+        <option value="active">Activas</option>
+        <option value="inactive">Inactivas</option>
+      </select>
+      <span class="admin-counts-inline">Total: {{ categories().length }}</span>
+      <span class="admin-counts-inline">Activas: {{ activeCategoryCount() }}</span>
+    </div>
+    @if (!visibleCategories().length) {
+      <div class="admin-empty">
+        <i class="ri-price-tag-3-line"></i>
+        <h3>No hay categorías</h3>
+        <p>Crea la primera categoría del catálogo.</p>
+      </div>
+    } @else {
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Slug</th>
+              <th>Productos</th>
+              <th>Orden</th>
+              <th>Estado</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (category of visibleCategories(); track category.id) {
+              <tr>
+                <td>
+                  @if (category.image) {
+                    <img
+                      class="category-table-image"
+                      [src]="service.fileUrl(category, category.image)"
+                      [alt]="category.name"
+                    />
+                  }
+                  <strong>{{ category.name }}</strong>
+                </td>
+                <td>{{ category.slug }}</td>
+                <td>{{ productCount(category) }}</td>
+                <td>{{ category.sortOrder }}</td>
+                <td>{{ category.active ? 'Activa' : 'Inactiva' }}</td>
+                <td class="admin-actions">
+                  <a
+                    class="admin-action-button"
+                    [routerLink]="['/admin/categorias/editar', category.id]"
+                    aria-label="Editar categoría"
+                    ><i class="ri-edit-line"></i> Editar</a
+                  ><button
+                    class="admin-action-button"
+                    type="button"
+                    (click)="toggle(category)"
+                    [class.admin-action-warning]="category.active"
+                    [class.admin-action-positive]="!category.active"
+                    [attr.aria-label]="
+                      category.active ? 'Desactivar categoría' : 'Activar categoría'
+                    "
+                  >
+                    <i [class]="category.active ? 'ri-eye-off-line' : 'ri-eye-line'"></i>
+                    {{ category.active ? 'Desactivar' : 'Activar' }}</button
+                  ><button
+                    class="admin-action-button admin-action-danger"
+                    type="button"
+                    (click)="askDelete(category)"
+                    aria-label="Eliminar categoría definitivamente"
+                    title="Eliminar definitivamente"
+                  >
+                    <i class="ri-delete-bin-line"></i> Eliminar
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+}
+@if (deleteTarget(); as category) {
+  <div class="admin-modal-backdrop" role="presentation" (click)="cancelDelete()">
+    <section
+      class="admin-confirm-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-category-title"
+      (click)="$event.stopPropagation()"
+    >
+      <h2 id="delete-category-title">¿Eliminar categoría definitivamente?</h2>
+      <p>
+        Esta acción eliminará permanentemente la categoría {{ category.name }}. No podrás
+        recuperarla desde el panel.
+      </p>
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-secondary-button" (click)="cancelDelete()">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="admin-danger-button"
+          [disabled]="deleting()"
+          (click)="confirmDelete()"
+        >
+          {{ deleting() ? 'Eliminando...' : 'Sí, eliminar definitivamente' }}
+        </button>
+      </div>
+    </section>
+  </div>
+}

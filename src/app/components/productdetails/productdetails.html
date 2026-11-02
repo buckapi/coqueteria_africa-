@@ -1,0 +1,130 @@
+<main class="product-detail-page">
+  @if (loading()) {
+    <div class="product-detail-state">Cargando creación...</div>
+  } @else if (error()) {
+    <div class="product-detail-state">
+      <i class="ri-search-eye-line"></i>
+      <h1>{{ error() }}</h1>
+      <a routerLink="/shop" class="coq-button">Volver a creaciones</a>
+    </div>
+  } @else if (product(); as item) {
+    <a routerLink="/shop" class="product-back"
+      ><i class="ri-arrow-left-line"></i> Volver al catálogo</a
+    >
+    <section class="product-detail">
+      <div class="product-gallery">
+        <div class="product-main-image">
+          <img [src]="image(selectedImage() || item.image)" [alt]="item.name" />
+        </div>
+        <div class="product-thumbs">
+          @for (filename of images(); track filename) {
+            <button
+              type="button"
+              [class.active]="selectedImage() === filename"
+              (click)="selectedImage.set(filename)"
+            >
+              <img [src]="image(filename)" [alt]="item.name" />
+            </button>
+          }
+        </div>
+      </div>
+      <div class="product-copy">
+        <p class="coq-kicker">{{ item.category || 'Creación especial' }}</p>
+        <h1>{{ item.name }}</h1>
+        <strong class="product-price">{{
+          item.price | currency: 'EUR' : 'symbol' : '1.0-2'
+        }}</strong>
+        <p class="product-description">{{ item.description }}</p>
+        <p class="product-stock">
+          {{ item.stock > 0 ? 'Disponible para consultar' : 'Agotado temporalmente' }}
+        </p>
+        @if (item.stock > 0) {
+          <div class="product-buy">
+            <div class="quantity">
+              <button
+                type="button"
+                [disabled]="quantity() <= 1"
+                (click)="changeQuantity(-1)"
+                aria-label="Disminuir cantidad"
+              >
+                -</button
+              ><span>{{ quantity() }}</span
+              ><button
+                type="button"
+                [disabled]="quantity() >= item.stock"
+                (click)="changeQuantity(1)"
+                aria-label="Aumentar cantidad"
+              >
+                +
+              </button>
+            </div>
+            <button type="button" class="product-action product-action-cart" (click)="addToCart()">
+              <i class="ri-shopping-cart-2-line" aria-hidden="true"></i>
+              <span>Agregar al carrito</span>
+            </button>
+          </div>
+          @if (added()) {
+            <p class="product-added" role="status">Creación agregada al carrito.</p>
+          }
+        }
+        <div class="product-actions">
+          <a
+            class="product-action product-action-whatsapp"
+            [href]="whatsappLink()"
+            target="_blank"
+            rel="noopener"
+          >
+            <i class="ri-whatsapp-line" aria-hidden="true"></i>
+            <span>Consultar por WhatsApp</span>
+          </a>
+          <button type="button" class="product-action product-action-share" (click)="openShare()">
+            <i class="ri-share-2-line" aria-hidden="true"></i>
+            <span>Compartir producto</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    @if (related().length) {
+      <section class="related-products">
+        <h2>También puede gustarte</h2>
+        <div class="related-grid">
+          @for (item of related(); track item.id) {
+            <a [routerLink]="['/shop', service.productSlug(item)]"
+              ><img [src]="relatedImage(item)" [alt]="item.name" /><strong>{{
+                item.name
+              }}</strong></a
+            >
+          }
+        </div>
+      </section>
+    }
+  }
+</main>
+@if (shareOpen()) {
+  <div class="share-backdrop" role="presentation" (click)="closeShare()">
+    <section
+      class="share-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="share-title"
+      (click)="$event.stopPropagation()"
+    >
+      <button type="button" class="share-close" aria-label="Cerrar" (click)="closeShare()">
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
+      <h2 id="share-title">Compartir esta creación</h2>
+      <button type="button" class="share-action" (click)="nativeShare()">
+        <i class="ri-share-2-line" aria-hidden="true"></i> Compartir
+      </button>
+      <a class="share-action" [href]="whatsappShareLink()" target="_blank" rel="noopener">
+        <i class="ri-whatsapp-line" aria-hidden="true"></i> WhatsApp
+      </a>
+      <button type="button" class="share-action" (click)="copyLink()">
+        <i class="ri-link" aria-hidden="true"></i> Copiar enlace
+      </button>
+      @if (shareStatus()) {
+        <p class="share-status" role="status">{{ shareStatus() }}</p>
+      }
+    </section>
+  </div>
+}

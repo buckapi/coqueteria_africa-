@@ -1,0 +1,65 @@
+<div class="admin-shell" [class.admin-menu-open]="menuOpen()">
+  <button
+    class="admin-backdrop"
+    type="button"
+    aria-label="Cerrar menú"
+    (click)="menuOpen.set(false)"
+  ></button>
+  <aside class="admin-sidebar">
+    <a routerLink="/admin" class="admin-brand" (click)="menuOpen.set(false)">
+      <img src="assets/img/logocoqueteria.png" alt="Coquetería Africa" />
+      <span>Administración</span>
+    </a>
+    <nav aria-label="Menú administrativo">
+      <a
+        routerLink="/admin"
+        routerLinkActive="admin-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="menuOpen.set(false)"
+        ><i class="ri-dashboard-line"></i>Panel</a
+      >
+      <a routerLink="/admin/productos" routerLinkActive="admin-active" (click)="menuOpen.set(false)"
+        ><i class="ri-store-2-line"></i>Productos</a
+      >
+      <a
+        routerLink="/admin/categorias"
+        routerLinkActive="admin-active"
+        (click)="menuOpen.set(false)"
+        ><i class="ri-price-tag-3-line"></i>Categorías</a
+      >
+      <a routerLink="/admin/banners" routerLinkActive="admin-active" (click)="menuOpen.set(false)"
+        ><i class="ri-image-2-line"></i>Banners</a
+      >
+      <a routerLink="/" target="_blank" rel="noopener noreferrer"
+        ><i class="ri-external-link-line"></i>Ver tienda</a
+      >
+    </nav>
+    <button class="admin-logout admin-sidebar-logout" type="button" (click)="logout()">
+      <i class="ri-logout-box-r-line"></i>Cerrar sesión
+    </button>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button
+        class="admin-menu-button"
+        type="button"
+        aria-label="Abrir menú"
+        [attr.aria-expanded]="menuOpen()"
+        (click)="menuOpen.set(true)"
+      >
+        <i class="ri-menu-line"></i>
+      </button>
+      <div>
+        <span class="admin-eyebrow">Coquetería Africa</span>
+        <h1>Panel administrativo</h1>
+      </div>
+      <div class="admin-user">
+        <span>{{ auth.userEmail() }}</span
+        ><button type="button" (click)="logout()" aria-label="Cerrar sesión">
+          <i class="ri-logout-box-r-line"></i>
+        </button>
+      </div>
+    </header>
+    <main class="admin-content"><router-outlet /></main>
+  </div>
+</div>

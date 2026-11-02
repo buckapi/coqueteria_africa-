@@ -1,0 +1,484 @@
+:host {
+  display: block;
+  color: var(--brand-dark);
+}
+.coq-section {
+  padding: 76px clamp(20px, 5vw, 88px);
+}
+.coq-section-heading {
+  margin: 0 auto 34px;
+  text-align: center;
+}
+.coq-section-heading h2,
+.coq-about-copy h2 {
+  margin: 6px 0 0;
+  color: var(--brand-primary);
+  font: 600 clamp(28px, 3vw, 42px)/1.1 var(--primary-font);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.coq-section-heading p:not(.coq-kicker) {
+  max-width: 520px;
+  margin: 12px auto 0;
+  color: var(--color-text-muted);
+}
+.coq-kicker {
+  margin: 0;
+  color: var(--brand-primary);
+  font: 600 12px/1.3 var(--secondary-font);
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+.coq-button,
+.coq-outline-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-radius: 99px;
+  padding: 13px 24px;
+  color: #fff;
+  background: var(--brand-primary);
+  font: 600 12px var(--secondary-font);
+  letter-spacing: 0.09em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.coq-button span,
+.coq-outline-button span {
+  font-size: 18px;
+  line-height: 0;
+}
+.coq-button:hover {
+  color: #fff;
+  background: #571766;
+  box-shadow: 0 8px 20px rgba(109, 31, 130, 0.2);
+  transform: translateY(-2px);
+}
+.coq-outline-button {
+  color: var(--brand-primary);
+  background: transparent;
+  border: 1px solid var(--brand-primary);
+}
+.coq-outline-button:hover {
+  color: #fff;
+  background: var(--brand-primary);
+}
+.coq-hero {
+  position: relative;
+  display: grid;
+  min-height: 510px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  overflow: hidden;
+  padding-top: 50px;
+  background: linear-gradient(105deg, #f8f4fc 0%, #eadcf2 54%, #d7c6ea 100%);
+}
+.coq-hero-copy {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  padding: 70px clamp(24px, 7vw, 110px);
+}
+.coq-hero-copy h1 {
+  max-width: 560px;
+  margin: 14px 0 18px;
+  color: var(--brand-dark);
+  font: 600 clamp(38px, 4.4vw, 70px)/0.98 var(--primary-font);
+  text-transform: uppercase;
+}
+.coq-hero-copy h1 em,
+.coq-story-copy em,
+.coq-about-copy em {
+  display: block;
+  color: var(--brand-primary);
+  font:
+    400 0.95em/1.05 'Playfair Display',
+    serif;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+.coq-hero-description {
+  max-width: 470px;
+  margin: 0 0 26px;
+  color: #4f4054;
+  font: 17px/1.6 var(--secondary-font);
+}
+.coq-hero-art {
+  min-height: 510px;
+}
+.coq-hero-art picture,
+.coq-hero-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.coq-hero-doodle {
+  position: absolute;
+  z-index: 2;
+  color: var(--brand-primary);
+  font: 45px var(--primary-font);
+}
+.coq-doodle-one {
+  top: 30%;
+  left: 48%;
+}
+.coq-doodle-two {
+  right: 5%;
+  top: 13%;
+}
+.coq-benefits {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 22px clamp(20px, 5vw, 88px);
+  background: #fff;
+  border-bottom: 1px solid var(--color-border);
+}
+.coq-benefits article {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  min-height: 54px;
+  padding: 4px 18px;
+  border-right: 1px solid var(--color-border);
+}
+.coq-benefits article:last-child {
+  border: 0;
+}
+.coq-benefits i {
+  color: var(--brand-primary);
+  font-size: 28px;
+}
+.coq-benefits strong,
+.coq-benefits span {
+  display: block;
+}
+.coq-benefits strong {
+  color: var(--brand-dark);
+  font: 600 13px var(--secondary-font);
+}
+.coq-benefits span {
+  margin-top: 3px;
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+.coq-categories {
+  background: var(--color-surface-soft);
+}
+.coq-category-track {
+  display: flex;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 46px);
+  overflow-x: auto;
+  padding: 4px 4px 10px;
+  scrollbar-width: thin;
+}
+.coq-category {
+  flex: 0 0 104px;
+  color: var(--brand-dark);
+  text-align: center;
+  text-decoration: none;
+}
+.coq-category-image {
+  display: grid;
+  width: 94px;
+  height: 94px;
+  margin: auto auto 12px;
+  padding: 4px;
+  place-items: center;
+  border: 1px solid var(--brand-secondary);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 5px rgba(215, 198, 234, 0.28);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.coq-category img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.coq-category strong {
+  font: 500 13px/1.25 var(--secondary-font);
+}
+.coq-category:hover {
+  color: var(--brand-primary);
+}
+.coq-category:hover .coq-category-image {
+  box-shadow: 0 0 0 7px rgba(215, 198, 234, 0.45);
+  transform: scale(1.05);
+}
+.coq-empty-categories {
+  padding: 24px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+.coq-empty-categories i {
+  color: var(--brand-primary);
+  font-size: 28px;
+}
+.coq-story-banner {
+  display: grid;
+  min-height: 290px;
+  grid-template-columns: 0.9fr 1.1fr;
+  overflow: hidden;
+  background: var(--brand-secondary);
+}
+.coq-story-copy {
+  align-self: center;
+  padding: 40px clamp(24px, 7vw, 100px);
+}
+.coq-story-copy h2 {
+  margin: 8px 0 24px;
+  color: var(--brand-primary);
+  font: 600 clamp(28px, 3.6vw, 48px)/0.98 var(--primary-font);
+  text-transform: uppercase;
+}
+.coq-story-banner img {
+  width: 100%;
+  height: 100%;
+  min-height: 290px;
+  object-fit: cover;
+  object-position: center;
+}
+.coq-products {
+  background: #fff;
+  text-align: center;
+}
+.coq-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1120px;
+  margin: 0 auto;
+  text-align: left;
+}
+.coq-product-card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(109, 31, 130, 0.05);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.coq-product-card:hover {
+  box-shadow: 0 14px 30px rgba(109, 31, 130, 0.14);
+  transform: translateY(-4px);
+}
+.coq-product-image {
+  position: relative;
+  aspect-ratio: 1.1;
+  overflow: hidden;
+  background: var(--color-surface-soft);
+}
+.coq-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.coq-product-card:hover .coq-product-image img {
+  transform: scale(1.04);
+}
+.coq-product-info {
+  padding: 16px 17px 18px;
+  text-align: center;
+}
+.coq-product-info h3 {
+  margin: 0 0 8px;
+  color: var(--brand-dark);
+  font: 500 18px var(--primary-font);
+}
+.coq-product-info p {
+  margin: 0 0 14px;
+  color: var(--brand-primary);
+  font: 600 16px var(--secondary-font);
+}
+.coq-outline-button {
+  margin-top: 32px;
+}
+.coq-preview-grid .coq-product-info p {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+.coq-about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 6vw, 90px);
+  background: var(--color-surface-soft);
+}
+.coq-about-image {
+  overflow: hidden;
+  border-radius: 2px 80px 2px 80px;
+}
+.coq-about-image img {
+  display: block;
+  width: 100%;
+  /* aspect-ratio: 1.3; */
+  object-fit: cover;
+}
+.coq-about-copy h2 {
+  margin-bottom: 22px;
+  text-transform: none;
+}
+.coq-about-copy > p:not(.coq-kicker) {
+  max-width: 520px;
+  margin: 0 0 24px;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+.coq-instagram {
+  display: grid;
+  justify-items: center;
+  background: #fff;
+  text-align: center;
+}
+.coq-instagram .coq-section-heading {
+  margin-bottom: 18px;
+}
+@media (max-width: 950px) {
+  .coq-benefits {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .coq-benefits article:nth-child(2) {
+    border-right: 0;
+  }
+  .coq-benefits article:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--color-border);
+  }
+}
+@media (max-width: 700px) {
+  .coq-hero {
+    display: flex;
+    min-height: 0;
+    flex-direction: column-reverse;
+  }
+  .coq-hero-art {
+    min-height: 260px;
+    max-height: 330px;
+  }
+  .coq-hero-copy {
+    padding: 38px 22px 48px;
+    text-align: center;
+  }
+  .coq-hero-copy h1 {
+    margin-right: auto;
+    margin-left: auto;
+    font-size: clamp(35px, 11vw, 52px);
+  }
+  .coq-hero-description {
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 15px;
+  }
+  .coq-hero-copy .coq-button {
+    width: min(100%, 250px);
+  }
+  .coq-doodle-one {
+    top: 35%;
+    left: 8%;
+  }
+  .coq-doodle-two {
+    top: 39%;
+    right: 7%;
+  }
+  .coq-benefits {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 12px 8px;
+  }
+  .coq-benefits article {
+    min-height: 72px;
+    padding: 7px 8px;
+  }
+  .coq-benefits i {
+    font-size: 22px;
+  }
+  .coq-benefits strong {
+    font-size: 11px;
+  }
+  .coq-benefits span {
+    font-size: 10px;
+  }
+  .coq-section {
+    padding: 54px 18px;
+  }
+  .coq-category-track {
+    justify-content: flex-start;
+    padding-right: 24px;
+  }
+  .coq-story-banner {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+  }
+  .coq-story-copy {
+    padding: 38px 24px;
+  }
+  .coq-story-banner img {
+    min-height: 190px;
+    max-height: 240px;
+  }
+  .coq-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .coq-product-info {
+    padding: 12px 9px 14px;
+  }
+  .coq-product-info h3 {
+    font-size: 15px;
+  }
+  .coq-product-info p {
+    font-size: 13px;
+  }
+  .coq-product-button {
+    font-size: 9px;
+    padding: 9px 5px;
+  }
+  .coq-about {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .coq-about-image {
+    border-radius: 2px 45px 2px 45px;
+  }
+  .coq-about-copy {
+    text-align: center;
+  }
+  .coq-about-copy > p:not(.coq-kicker) {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+@media (max-width: 767px) {
+  .coq-hero {
+    padding-top: 105px;
+  }
+}
+@media (max-width: 380px) {
+  .coq-benefits strong {
+    font-size: 10px;
+  }
+  .coq-product-grid {
+    grid-template-columns: 1fr;
+    max-width: 270px;
+  }
+  .coq-category {
+    flex-basis: 92px;
+  }
+  .coq-category-image {
+    width: 82px;
+    height: 82px;
+  }
+}

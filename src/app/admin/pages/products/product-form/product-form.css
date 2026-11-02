@@ -1,0 +1,219 @@
+:host {
+  display: block;
+}
+.admin-page-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.admin-page-heading h2 {
+  margin: 5px 0 0;
+  font:
+    600 34px 'Playfair Display',
+    serif;
+}
+.admin-primary-button,
+.admin-secondary-button {
+  min-height: 44px;
+  align-items: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: #6d1f82;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font:
+    600 14px Inter,
+    sans-serif;
+}
+.admin-secondary-button {
+  border-color: #6d1f82;
+  background: #fff;
+  color: #6d1f82;
+}
+.admin-primary-button:hover,
+.admin-primary-button:focus-visible {
+  background: #571766;
+}
+.admin-secondary-button:hover,
+.admin-secondary-button:focus-visible {
+  background: #d7c6ea;
+}
+.admin-product-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+  gap: 20px;
+}
+.admin-panel {
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e7dcef;
+  border-radius: 14px;
+}
+.admin-panel h3 {
+  margin: 0 0 20px;
+  font:
+    600 21px 'Playfair Display',
+    serif;
+}
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.admin-form-grid label {
+  display: grid;
+  gap: 7px;
+  color: #111;
+  font-size: 14px;
+  font-weight: 600;
+}
+.admin-form-grid .admin-full {
+  grid-column: 1 / -1;
+}
+.admin-form-grid input,
+.admin-form-grid textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e7dcef;
+  border-radius: 8px;
+  font: inherit;
+}
+.admin-form-grid input:focus,
+.admin-form-grid textarea:focus {
+  outline: 3px solid #d7c6ea;
+  border-color: #6d1f82;
+}
+.admin-form-grid small {
+  color: #8b1e2d;
+  font-weight: 400;
+}
+.admin-form-side {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+}
+.admin-radio,
+.admin-check {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+.admin-upload {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 170px;
+  overflow: hidden;
+  border: 1px dashed #d7c6ea;
+  border-radius: 10px;
+  color: #6d1f82;
+  cursor: pointer;
+  text-align: center;
+}
+.admin-upload input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.admin-upload img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+.admin-upload i {
+  font-size: 32px;
+}
+.admin-upload-small {
+  min-height: 90px;
+}
+.admin-help {
+  color: #626262;
+  font-size: 12px;
+}
+.admin-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.admin-gallery button {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.admin-gallery img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.admin-gallery i {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: #fff;
+  background: #111;
+  border-radius: 50%;
+}
+.admin-form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+.admin-primary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.admin-alert {
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  color: #8b1e2d;
+  background: #fdecef;
+}
+.admin-alert-success {
+  color: #266844;
+  background: #eaf7ef;
+}
+.admin-muted {
+  color: #626262;
+}
+@media (max-width: 800px) {
+  .admin-page-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+  .admin-page-heading h2 {
+    font-size: 28px;
+  }
+  .admin-product-form {
+    grid-template-columns: 1fr;
+  }
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-form-grid .admin-full {
+    grid-column: auto;
+  }
+  .admin-form-actions {
+    grid-column: auto;
+    justify-content: stretch;
+  }
+  .admin-form-actions > * {
+    flex: 1;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,154 @@
+<section class="admin-page-heading">
+  <div>
+    <span class="admin-eyebrow">Catálogo</span>
+    <h2>Productos</h2>
+    <p class="admin-page-description">
+      Gestiona las creaciones, imágenes, existencias y estados de publicación de tu catálogo.
+    </p>
+  </div>
+  <a routerLink="/admin/productos/nuevo" class="admin-primary-button"
+    ><i class="ri-add-line"></i> Nuevo producto</a
+  >
+</section>
+<section class="admin-panel">
+  <div class="admin-toolbar">
+    <label class="admin-search"
+      ><i class="ri-search-line"></i
+      ><input
+        type="search"
+        [(ngModel)]="search"
+        (keyup.enter)="load()"
+        placeholder="Buscar por nombre..." /></label
+    ><select
+      [ngModel]="status()"
+      (ngModelChange)="status.set($event)"
+      aria-label="Filtrar por estado"
+    >
+      <option value="">Todos los estados</option>
+      <option value="publicado">Publicados</option>
+      <option value="borrador">Borradores</option>
+      <option value="archivado">Archivados</option></select
+    ><button type="button" class="admin-secondary-button" (click)="load()">Buscar</button>
+  </div>
+  <div class="admin-counts" aria-label="Cantidad por estado">
+    <span>Todos: {{ allProductsCount() }}</span>
+    <span>Publicados: {{ counts()['publicado'] || 0 }}</span>
+    <span>Borradores: {{ counts()['borrador'] || 0 }}</span>
+    <span>Archivados: {{ counts()['archivado'] || 0 }}</span>
+  </div>
+  @if (error()) {
+    <div class="admin-alert">{{ error() }}</div>
+  }
+  @if (notice()) {
+    <div class="admin-alert admin-alert-success">{{ notice() }}</div>
+  }
+  @if (loading()) {
+    <p class="admin-muted">Cargando catálogo...</p>
+  } @else if (!products().length) {
+    <div class="admin-empty">
+      <i class="ri-search-eye-line"></i>
+      <h3>No hay productos para mostrar</h3>
+      <p>Prueba otro filtro o crea una nueva creación.</p>
+    </div>
+  } @else {
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Estado</th>
+            <th>Existencias</th>
+            <th><span class="sr-only">Acciones</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products(); track product.id) {
+            <tr>
+              <td>
+                <strong>{{ product.name }}</strong
+                ><small>{{ product.category || 'Sin categoría' }}</small>
+              </td>
+              <td>{{ product.price | number: '1.2-2' }} €</td>
+              <td>
+                <span
+                  class="admin-status"
+                  [class.admin-status-published]="product.status === 'publicado'"
+                  >{{ product.status }}</span
+                >
+              </td>
+              <td>{{ product.stock }}</td>
+              <td class="admin-actions">
+                <a
+                  [routerLink]="['/admin/productos/editar', product.id]"
+                  aria-label="Editar producto"
+                  ><i class="ri-edit-line"></i
+                ></a>
+                @if (product.status === 'publicado') {
+                  <button
+                    type="button"
+                    class="admin-action-warning"
+                    (click)="archive(product)"
+                    aria-label="Archivar producto"
+                    title="Archivar producto"
+                  >
+                    <i class="ri-archive-line"></i>
+                  </button>
+                } @else {
+                  <button
+                    type="button"
+                    class="admin-action-positive"
+                    (click)="publish(product)"
+                    aria-label="Publicar producto"
+                    title="Publicar producto"
+                  >
+                    <i class="ri-eye-line"></i>
+                  </button>
+                }
+                <button
+                  type="button"
+                  class="admin-action-danger"
+                  (click)="askDelete(product)"
+                  aria-label="Eliminar producto definitivamente"
+                  title="Eliminar definitivamente"
+                >
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
+@if (deleteTarget(); as product) {
+  <div class="admin-modal-backdrop" role="presentation" (click)="cancelDelete()">
+    <section
+      class="admin-confirm-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-product-title"
+      (click)="$event.stopPropagation()"
+    >
+      <h2 id="delete-product-title">¿Eliminar producto definitivamente?</h2>
+      <p>
+        Estás a punto de eliminar {{ product.name }}. Esta acción no se puede deshacer y el producto
+        desaparecerá del catálogo.
+      </p>
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-secondary-button" (click)="cancelDelete()">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="admin-danger-button"
+          [disabled]="deleting()"
+          (click)="confirmDelete()"
+        >
+          {{ deleting() ? 'Eliminando...' : 'Sí, eliminar definitivamente' }}
+        </button>
+      </div>
+    </section>
+  </div>
+}

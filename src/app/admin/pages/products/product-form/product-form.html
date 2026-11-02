@@ -1,0 +1,127 @@
+<section class="admin-page-heading">
+  <div>
+    <span class="admin-eyebrow">Catálogo</span>
+    <h2>{{ id ? 'Editar producto' : 'Nueva creación' }}</h2>
+    <p class="admin-page-description">
+      Completa la información de la creación y define cómo aparecerá en la tienda.
+    </p>
+  </div>
+  <a routerLink="/admin/productos" class="admin-secondary-button">Volver al catálogo</a>
+</section>
+@if (loading()) {
+  <div class="admin-panel admin-muted">Cargando producto...</div>
+} @else {
+  @if (error()) {
+    <div class="admin-alert">{{ error() }}</div>
+  }
+  @if (saved()) {
+    <div class="admin-alert admin-alert-success">Producto guardado correctamente.</div>
+  }
+  <form class="admin-product-form" [formGroup]="form" (ngSubmit)="save()">
+    <section class="admin-panel">
+      <h3>Información principal</h3>
+      <div class="admin-form-grid">
+        <label
+          >Nombre *<input
+            formControlName="name"
+            type="text"
+            placeholder="Nombre del producto"
+            (input)="generateSlug()"
+          />
+          @if (form.controls.name.touched && form.controls.name.invalid) {
+            <small>Indica un nombre de hasta 120 caracteres.</small>
+          }</label
+        ><label
+          >Slug público *<input
+            formControlName="slug"
+            type="text"
+            placeholder="nombre-del-producto"
+            (input)="markSlugEdited()"
+          />
+          @if (form.controls.slug.touched && form.controls.slug.invalid) {
+            <small>Indica un slug único de hasta 120 caracteres.</small>
+          }</label
+        ><label
+          >Categoría<select formControlName="categorySlug">
+            <option value="">Sin categoría</option>
+            @for (category of categories(); track category.id) {
+              <option [value]="category.slug">{{ category.name }}</option>
+            }
+          </select></label
+        ><label class="admin-full"
+          >Descripción *<textarea
+            formControlName="description"
+            rows="7"
+            placeholder="Describe la creación..."
+          ></textarea>
+          @if (form.controls.description.touched && form.controls.description.invalid) {
+            <small>Indica una descripción del producto.</small>
+          }</label
+        ><label
+          >Precio *<input formControlName="price" type="number" min="0" step="0.01" />
+          @if (form.controls.price.touched && form.controls.price.invalid) {
+            <small>Indica un precio igual o mayor que cero.</small>
+          }</label
+        ><label
+          >Existencias<input formControlName="stock" type="number" min="0" step="1" />
+          @if (form.controls.stock.touched && form.controls.stock.invalid) {
+            <small>Las existencias no pueden ser negativas.</small>
+          }</label
+        ><label>SKU opcional<input formControlName="sku" type="text" /></label>
+      </div>
+    </section>
+    <aside class="admin-form-side">
+      <section class="admin-panel">
+        <h3>Estado</h3>
+        <label class="admin-radio"
+          ><input formControlName="status" type="radio" value="borrador" /> Borrador</label
+        ><label class="admin-radio"
+          ><input formControlName="status" type="radio" value="publicado" /> Publicado</label
+        ><label class="admin-radio"
+          ><input formControlName="status" type="radio" value="archivado" /> Archivado</label
+        ><label class="admin-check"
+          ><input formControlName="featured" type="checkbox" /> Producto destacado</label
+        >
+      </section>
+      <section class="admin-panel">
+        <h3>Imagen principal</h3>
+        <label class="admin-upload">
+          @if (imagePreview()) {
+            <img [src]="imagePreview()" alt="Vista previa principal" />
+          } @else {
+            <i class="ri-image-add-line"></i><span>Seleccionar imagen</span>
+          }
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            (change)="chooseImage($event)"
+        /></label>
+        <p class="admin-help">JPG, PNG o WebP. Máximo 5 MB.</p>
+      </section>
+      <section class="admin-panel">
+        <h3>Galería</h3>
+        <label class="admin-upload admin-upload-small"
+          ><i class="ri-gallery-line"></i><span>Agregar imágenes</span
+          ><input
+            type="file"
+            multiple
+            accept="image/jpeg,image/png,image/webp"
+            (change)="chooseGallery($event)"
+        /></label>
+        <div class="admin-gallery">
+          @for (preview of galleryPreviews(); track $index) {
+            <button type="button" (click)="removeGallery($index)" aria-label="Eliminar imagen">
+              <img [src]="preview" alt="Vista previa de galería" /><i class="ri-close-line"></i>
+            </button>
+          }
+        </div>
+      </section>
+    </aside>
+    <div class="admin-form-actions">
+      <a routerLink="/admin/productos" class="admin-secondary-button">Cancelar</a
+      ><button class="admin-primary-button" type="submit" [disabled]="saving()">
+        {{ saving() ? 'Guardando...' : 'Guardar producto' }}
+      </button>
+    </div>
+  </form>
+}

@@ -1,0 +1,169 @@
+<section class="admin-page-heading">
+  <div>
+    <span class="admin-eyebrow">Comunicación</span>
+    <h2>Banners</h2>
+    <p class="admin-page-description">
+      Administra la imagen principal de tu tienda y selecciona la campaña que deseas mostrar a tus
+      clientes.
+    </p>
+  </div>
+  @if (isForm) {
+    <a routerLink="/admin/banners" class="admin-secondary-button">Volver</a>
+  } @else {
+    <a routerLink="/admin/banners/nuevo" class="admin-primary-button">Nuevo banner</a>
+  }
+</section>
+@if (error()) {
+  <div class="admin-alert">{{ error() }}</div>
+}
+@if (isForm) {
+  <form class="admin-panel banner-form" [formGroup]="form" (ngSubmit)="save()">
+    <h3>{{ id ? 'Editar banner' : 'Nuevo banner' }}</h3>
+    <div class="admin-form-grid">
+      <label>Campaña *<input formControlName="campaignName" placeholder="Campaña general" /></label
+      ><label>Etiqueta superior<input formControlName="eyebrow" /></label
+      ><label>Título *<input formControlName="title" /></label
+      ><label>Texto destacado<input formControlName="highlightText" /></label
+      ><label
+        >Tipo de campaña<input formControlName="campaignType" placeholder="Navidad, general..."
+      /></label>
+      <label class="admin-full"
+        >Subtítulo<textarea rows="3" formControlName="subtitle"></textarea></label
+      ><label class="admin-full"
+        >Descripción<textarea rows="3" formControlName="description"></textarea></label
+      ><label>Texto del botón<input formControlName="buttonText" /></label
+      ><label>Enlace<input formControlName="buttonUrl" /></label>
+      <label>Inicia<input type="datetime-local" formControlName="startsAt" /></label
+      ><label>Finaliza<input type="datetime-local" formControlName="endsAt" /></label
+      ><label>Prioridad<input type="number" min="0" formControlName="priority" /></label
+      ><label class="admin-check"
+        ><input type="checkbox" formControlName="enabled" /> Habilitado</label
+      >
+    </div>
+    <div class="banner-uploads">
+      <label class="admin-upload"
+        ><strong>Imagen desktop</strong>
+        @if (desktopPreview()) {
+          <img [src]="desktopPreview()" alt="Vista previa desktop" />
+        } @else {
+          <i class="ri-image-add-line"></i><span>Seleccionar</span>
+        }
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          (change)="chooseImage($event, 'desktop')" /></label
+      ><label class="admin-upload"
+        ><strong>Imagen móvil</strong>
+        @if (mobilePreview()) {
+          <img [src]="mobilePreview()" alt="Vista previa móvil" />
+        } @else {
+          <i class="ri-smartphone-line"></i><span>Opcional</span>
+        }
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          (change)="chooseImage($event, 'mobile')"
+      /></label>
+    </div>
+    <section class="banner-preview" aria-label="Vista previa del Hero">
+      <div class="banner-preview-heading">
+        <div>
+          <span class="admin-eyebrow">Previsualización</span>
+          <h3>Así se verá en el Hero principal</h3>
+        </div>
+        <span class="admin-state">Desktop / móvil</span>
+      </div>
+      <div class="banner-preview-hero">
+        <div class="banner-preview-copy">
+          <p>{{ form.controls.eyebrow.value || 'Coquetería Africa' }}</p>
+          <h4>
+            {{ form.controls.title.value || 'Título principal' }}
+            <em>{{ form.controls.highlightText.value || 'texto destacado ♡' }}</em>
+          </h4>
+          <span>{{
+            form.controls.description.value ||
+              form.controls.subtitle.value ||
+              'Descripción de la campaña'
+          }}</span>
+          <button type="button">
+            {{ form.controls.buttonText.value || 'Ver novedades' }} <b>→</b>
+          </button>
+        </div>
+        <div class="banner-preview-art">
+          <picture
+            ><source
+              media="(max-width: 650px)"
+              [srcset]="mobilePreview() || desktopPreview() || 'assets/img/about-1.png'" />
+            <img [src]="desktopPreview() || 'assets/img/about-1.png'" alt="Vista previa del Hero"
+          /></picture>
+        </div>
+      </div>
+    </section>
+    <button type="submit" class="admin-primary-button" [disabled]="saving()">
+      {{ saving() ? 'Guardando...' : 'Guardar banner' }}
+    </button>
+  </form>
+} @else {
+  <section class="admin-panel">
+    @if (!banners().length) {
+      <div class="admin-empty">
+        <i class="ri-image-2-line"></i>
+        <h3>No hay banners</h3>
+        <p>El Hero usará su presentación base hasta que configures una campaña.</p>
+      </div>
+    } @else {
+      <div class="banner-grid">
+        @for (banner of banners(); track banner.id) {
+          <article class="banner-card" [class.primary]="activeBannerId() === banner.id">
+            <div class="banner-card-image">
+              @if (banner.imageDesktop) {
+                <img [src]="service.fileUrl(banner, banner.imageDesktop)" [alt]="banner.title" />
+              } @else {
+                <img src="assets/img/about-1.png" alt="Banner sin imagen configurada" />
+              }
+              <span class="admin-state" [class.admin-state-active]="activeBannerId() === banner.id">
+                {{ activeBannerId() === banner.id ? 'Banner principal' : 'Disponible' }}
+              </span>
+            </div>
+            <div class="banner-card-body">
+              <div>
+                <h3>{{ banner.campaignName || banner.campaignType || 'Campaña general' }}</h3>
+                <p>{{ banner.title }}</p>
+              </div>
+              <div>
+                <span class="admin-state" [class.admin-state-active]="banner.enabled">
+                  {{ banner.enabled ? 'Publicado' : 'Desactivado' }}
+                </span>
+                <small class="admin-field-help">{{
+                  banner.createdAt ? (banner.createdAt | date: 'short') : 'Sin fecha de creación'
+                }}</small>
+              </div>
+              <div class="banner-card-actions">
+                <a class="admin-action-button" [routerLink]="['/admin/banners/editar', banner.id]">
+                  <i class="ri-edit-line"></i> Editar
+                </a>
+                @if (activeBannerId() !== banner.id) {
+                  <button class="admin-primary-button" type="button" (click)="useAsPrimary(banner)">
+                    Usar este banner
+                  </button>
+                }
+                @if (generalBannerId() !== banner.id) {
+                  <button class="admin-action-button" type="button" (click)="useAsGeneral(banner)">
+                    Usar como general
+                  </button>
+                }
+                <button class="admin-action-button" type="button" (click)="toggle(banner)">
+                  <i [class]="banner.enabled ? 'ri-eye-off-line' : 'ri-eye-line'"></i>
+                  {{ banner.enabled ? 'Desactivar' : 'Activar' }}
+                </button>
+                <button class="admin-danger-button" type="button" (click)="remove(banner)">
+                  <i class="ri-delete-bin-line"></i> Eliminar
+                </button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+}

@@ -1,0 +1,74 @@
+<main class="checkout-page">
+  <div class="checkout-heading">
+    <p class="coq-kicker">Pedido por WhatsApp</p>
+    <h1>Confirma tu selección</h1>
+    <p>Revisaremos disponibilidad, entrega y forma de pago contigo.</p>
+  </div>
+  @if (!cart.lines().length) {
+    <div class="checkout-empty">
+      <i class="ri-shopping-bag-3-line"></i>
+      <h2>No hay productos en tu pedido</h2>
+      <a routerLink="/shop" class="coq-button">Volver al catálogo</a>
+    </div>
+  } @else {
+    <div class="checkout-layout">
+      <section class="checkout-list">
+        <h2>Tu pedido</h2>
+        @for (line of cart.lines(); track line.productId) {
+          <article>
+            <img [src]="image(line.productId, line.image)" [alt]="line.name" />
+            <div>
+              <strong>{{ line.name }}</strong
+              ><span
+                >{{ line.quantity }} × {{ line.price | currency: 'EUR' : 'symbol' : '1.0-2' }}</span
+              >
+            </div>
+            <b>{{ line.price * line.quantity | currency: 'EUR' : 'symbol' : '1.0-2' }}</b>
+          </article>
+        }
+        <p class="checkout-total">
+          <span>Total estimado</span
+          ><strong>{{ cart.subtotal() | currency: 'EUR' : 'symbol' : '1.0-2' }}</strong>
+        </p>
+      </section>
+      <section class="checkout-form">
+        <h2>Datos opcionales</h2>
+        <label
+          >Nombre<input
+            [ngModel]="name()"
+            (ngModelChange)="name.set($event)"
+            placeholder="Tu nombre" /></label
+        ><label
+          >Observaciones<textarea
+            [ngModel]="notes()"
+            (ngModelChange)="notes.set($event)"
+            rows="5"
+            placeholder="Color, entrega u otro detalle..."
+          ></textarea>
+        </label>
+        <p class="checkout-help">
+          No solicitamos pagos ni confirmamos el pedido automáticamente. WhatsApp te permitirá
+          revisar el mensaje antes de enviarlo.
+        </p>
+        @if (error()) {
+          <p class="checkout-error" role="alert">{{ error() }}</p>
+        }
+        @if (unavailable().length) {
+          <p class="checkout-error" role="alert">
+            No disponible: {{ unavailable().join(', ') }}. Elimínalo del carrito para continuar.
+          </p>
+        }
+        <a
+          class="coq-button checkout-whatsapp"
+          [href]="whatsappUrl()"
+          [attr.aria-disabled]="validating() || unavailable().length ? 'true' : null"
+          (click)="sendWhatsApp($event)"
+          target="_blank"
+          rel="noopener"
+          ><i class="ri-whatsapp-line"></i>
+          {{ validating() ? 'Validando disponibilidad...' : 'Enviar pedido por WhatsApp' }}</a
+        >
+      </section>
+    </div>
+  }
+</main>

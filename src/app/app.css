@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.floating-actions {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.floating-actions .cs_scrollup_btn {
+  position: static;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+}
+
+.floating-actions app-whatsapp-button {
+  display: block;
+}
+
+.floating-actions .whatsapp-float {
+  position: static;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .floating-actions {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    gap: 12px;
+  }
+
+  .floating-actions .cs_scrollup_btn {
+    width: 42px;
+    height: 42px;
+  }
+}

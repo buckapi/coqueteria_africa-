@@ -1,0 +1,172 @@
+<section class="shop-page">
+  <div class="shop-heading">
+    <p class="coq-kicker">Coquetería Africa</p>
+    <h1>Nuestras creaciones</h1>
+    <p>Explora accesorios y detalles hechos con cariño para acompañar tus momentos.</p>
+  </div>
+  <div class="shop-toolbar">
+    <label class="shop-search"
+      ><i class="ri-search-line"></i
+      ><input
+        type="search"
+        [ngModel]="search()"
+        (ngModelChange)="updateSearch($event)"
+        placeholder="Buscar por nombre, descripción o categoría" /><button
+        type="button"
+        (click)="clearSearch()"
+        [hidden]="!search()"
+        aria-label="Limpiar búsqueda"
+      >
+        <i class="ri-close-line"></i></button></label
+    ><button
+      type="button"
+      class="shop-filter-toggle"
+      (click)="filtersOpen.update((value) => !value)"
+    >
+      <i class="ri-equalizer-2-line"></i> Filtrar
+    </button>
+  </div>
+  <div class="shop-layout">
+    <aside class="shop-filters" [class.open]="filtersOpen()">
+      <div class="shop-filter-header">
+        <strong>Filtrar catálogo</strong
+        ><button type="button" (click)="filtersOpen.set(false)" aria-label="Cerrar filtros">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+      <label
+        >Categoría<select
+          [ngModel]="category()"
+          (ngModelChange)="category.set($event); page.set(1); updateUrl()"
+        >
+          <option value="">Todas</option>
+          @for (item of categories(); track item.id) {
+            <option [value]="item.slug">{{ item.name }}</option>
+          }
+        </select></label
+      >
+      <div class="shop-price-fields">
+        <label
+          >Precio mínimo<input
+            type="number"
+            min="0"
+            [ngModel]="minPrice()"
+            (ngModelChange)="minPrice.set($event || null); page.set(1); updateUrl()" /></label
+        ><label
+          >Precio máximo<input
+            type="number"
+            min="0"
+            [ngModel]="maxPrice()"
+            (ngModelChange)="maxPrice.set($event || null); page.set(1); updateUrl()"
+        /></label>
+      </div>
+      <label class="shop-check"
+        ><input
+          type="checkbox"
+          [ngModel]="onlyAvailable()"
+          (ngModelChange)="onlyAvailable.set($event); page.set(1); updateUrl()"
+        />
+        Sólo disponibles</label
+      ><label class="shop-check"
+        ><input
+          type="checkbox"
+          [ngModel]="onlyFeatured()"
+          (ngModelChange)="onlyFeatured.set($event); page.set(1); updateUrl()"
+        />
+        Destacados</label
+      >
+    </aside>
+    <main class="shop-results">
+      <div class="shop-results-head">
+        <span>{{ filtered().length }} creaciones</span
+        ><label
+          >Ordenar<select
+            [ngModel]="sort()"
+            (ngModelChange)="sort.set($event); page.set(1); updateUrl()"
+          >
+            <option value="recent">Más recientes</option>
+            <option value="price-asc">Precio menor a mayor</option>
+            <option value="price-desc">Precio mayor a menor</option>
+            <option value="name">Nombre A-Z</option>
+          </select></label
+        >
+      </div>
+      @if (loading()) {
+        <div class="shop-state">
+          <i class="ri-loader-4-line"></i>
+          <p>Cargando creaciones...</p>
+        </div>
+      } @else if (error()) {
+        <div class="shop-state">
+          <i class="ri-cloud-off-line"></i>
+          <p>{{ error() }}</p>
+        </div>
+      } @else if (!visible().length) {
+        <div class="shop-state">
+          <i class="ri-search-eye-line"></i>
+          <h2>No encontramos creaciones</h2>
+          <p>Prueba con otra búsqueda o limpia los filtros.</p>
+          <button
+            type="button"
+            class="coq-outline-button"
+            (click)="
+              clearSearch();
+              category.set('');
+              minPrice.set(null);
+              maxPrice.set(null);
+              onlyAvailable.set(false);
+              onlyFeatured.set(false)
+            "
+          >
+            Limpiar filtros
+          </button>
+        </div>
+      } @else {
+        <div class="shop-grid">
+          @for (product of visible(); track product.id) {
+            <article class="shop-card">
+              <a
+                [routerLink]="['/shop', productsService.productSlug(product)]"
+                class="shop-card-image"
+                ><img [src]="image(product)" [alt]="product.name" /><span
+                  class="shop-card-status"
+                  [class.out]="product.stock <= 0"
+                  >{{ product.stock > 0 ? 'Disponible' : 'Agotado' }}</span
+                ></a
+              >
+              <div class="shop-card-body">
+                <p>{{ product.category || 'Creación especial' }}</p>
+                <h2>
+                  <a [routerLink]="['/shop', productsService.productSlug(product)]">{{
+                    product.name
+                  }}</a>
+                </h2>
+                <strong>{{ product.price | currency: 'EUR' : 'symbol' : '1.0-2' }}</strong>
+                <div class="coq-product-actions">
+                  <a
+                    [routerLink]="['/shop', productsService.productSlug(product)]"
+                    class="coq-product-button coq-product-button-detail"
+                    ><i class="ri-eye-line" aria-hidden="true"></i> Ver detalle</a
+                  ><button
+                    type="button"
+                    class="coq-product-button coq-product-button-cart"
+                    [disabled]="product.stock <= 0"
+                    (click)="addToCart(product)"
+                  >
+                    <i class="ri-shopping-cart-2-line" aria-hidden="true"></i>
+                    {{ product.stock > 0 ? 'Agregar al carrito' : 'No disponible' }}
+                  </button>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+        @if (hasMore()) {
+          <button type="button" class="coq-outline-button shop-more" (click)="loadMore()">
+            Cargar más
+          </button>
+        }
+      }
+    </main>
+  </div>
+</section>

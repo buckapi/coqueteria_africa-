@@ -1,0 +1,133 @@
+<header class="cs_site_header cs_style_1 cs_sticky_header">
+  <div class="cs_topbar">
+    <div class="container-fluid">
+      <div class="cs_topbar_in">
+        <div class="cs_topbar_social">
+          <a
+            href="https://www.instagram.com/coqueteria.africa/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram de Coquetería Africa"
+          >
+            <i class="ri-instagram-line"></i>
+          </a>
+        </div>
+        <p class="cs_topbar_notice_text">Hecho a mano y con amor | Creaciones con personalidad</p>
+        <div class="cs_topbar_links">
+          <a
+            href="https://www.instagram.com/coqueteria.africa/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Síguenos en Instagram</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs_main_header position-relative">
+    <div class="container-fluid">
+      <div class="cs_main_header_in">
+        <div class="cs_main_header_left">
+          <a
+            class="cs_site_branding"
+            routerLink="/"
+            routerLinkActive="cs_active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            aria-label="Coquetería Africa, inicio"
+          >
+            <img src="assets/img/logocoqueteria.png" alt="Logotipo de Coquetería Africa" />
+          </a>
+        </div>
+
+        <div class="cs_main_header_center">
+          <nav class="cs_nav cs_medium cs_primary_color" aria-label="Navegación principal">
+            <button
+              type="button"
+              class="cs_menu_toggle"
+              aria-label="Abrir menú"
+              [attr.aria-expanded]="menuOpen()"
+              (click)="toggleMenu()"
+            >
+              <span></span>
+            </button>
+            <div class="cs_nav_list_wrapper" [class.active]="menuOpen()">
+              <button
+                type="button"
+                class="cs_close_nav"
+                aria-label="Cerrar menú"
+                [class.active]="menuOpen()"
+                (click)="closeMenu()"
+              >
+                <i class="ri-close-line"></i>
+              </button>
+              <a routerLink="/" class="cs_site_brand d-xl-none" (click)="closeMenu()">
+                <img src="assets/img/logocoqueteria.png" alt="Logotipo de Coquetería Africa" />
+              </a>
+              <ul class="cs_nav_list cs_mp_0">
+                <li>
+                  <a
+                    routerLink="/"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    (click)="closeMenu()"
+                    >Inicio</a
+                  >
+                </li>
+                <li>
+                  <a routerLink="/shop" (click)="closeMenu()">Creaciones</a>
+                </li>
+                <li>
+                  <a routerLink="/" fragment="sobre-nosotros" (click)="closeMenu()"
+                    >Sobre nosotros</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.instagram.com/coqueteria.africa/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    (click)="closeMenu()"
+                    >Instagram</a
+                  >
+                </li>
+                <li><a routerLink="/" fragment="contacto" (click)="closeMenu()">Contacto</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div class="cs_main_header_right">
+          <button
+            type="button"
+            class="cs_header_action cs_search_btn mobile_hide"
+            aria-label="Buscar"
+            (click)="toggleSearch()"
+          >
+            <i class="ri-search-line"></i>
+          </button>
+          <a routerLink="/carrito" class="cs_header_action cs_has_badge" aria-label="Carrito"
+            ><i class="ri-shopping-cart-2-line"></i
+            ><span class="cs_action_badge cs_cart_count">{{ cart.count() }}</span></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cs_header_search" [class.active]="searchOpen()">
+    <div class="cs_header_search_in">
+      <form class="cs_search_form" (ngSubmit)="submitSearch()">
+        <input
+          type="search"
+          name="search"
+          [(ngModel)]="searchTerm"
+          placeholder="Buscar creaciones..."
+          aria-label="Buscar creaciones"
+        />
+        <button type="submit" aria-label="Enviar búsqueda"><i class="ri-search-line"></i></button>
+      </form>
+      <button type="button" class="cs_close" aria-label="Cerrar búsqueda" (click)="toggleSearch()">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+  </div>
+</header>

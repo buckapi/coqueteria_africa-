@@ -1,0 +1,80 @@
+<main class="cart-page">
+  <div class="cart-heading">
+    <p class="coq-kicker">Tu selección</p>
+    <h1>Carrito</h1>
+  </div>
+  @if (notice()) {
+    <div class="cart-notice">{{ notice() }}</div>
+  }
+  @if (!cart.lines().length) {
+    <div class="cart-empty">
+      <i class="ri-shopping-bag-3-line"></i>
+      <h2>Tu carrito está vacío</h2>
+      <p>Encuentra una creación especial para ti.</p>
+      <a routerLink="/shop" class="coq-button">Explorar creaciones</a>
+    </div>
+  } @else {
+    <section class="cart-layout">
+      <div class="cart-lines">
+        @for (line of cart.lines(); track line.productId) {
+          <article class="cart-line">
+            <img [src]="image(line.productId, line.image)" [alt]="line.name" />
+            <div>
+              <h2>{{ line.name }}</h2>
+              <p>{{ line.price | currency: 'EUR' : 'symbol' : '1.0-2' }}</p>
+              @if (!line.available) {
+                <small class="cart-line-unavailable">No disponible actualmente</small>
+              }
+              <div class="quantity" aria-label="Cantidad del producto">
+                <button
+                  type="button"
+                  [disabled]="!line.available || line.quantity <= 1"
+                  (click)="cart.decrease(line.productId)"
+                  aria-label="Disminuir cantidad"
+                >
+                  −</button
+                ><span>{{ line.quantity }}</span
+                ><button
+                  type="button"
+                  [disabled]="
+                    !line.available ||
+                    (stock(line.productId) > 0 && line.quantity >= stock(line.productId))
+                  "
+                  (click)="cart.increase(line.productId, stock(line.productId))"
+                  aria-label="Aumentar cantidad"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            @if (line.available) {
+              <strong>{{
+                line.price * line.quantity | currency: 'EUR' : 'symbol' : '1.0-2'
+              }}</strong>
+            } @else {
+              <strong class="cart-line-unavailable">No disponible</strong>
+            }
+            <button
+              type="button"
+              class="cart-remove"
+              (click)="cart.remove(line.productId)"
+              aria-label="Eliminar producto"
+            >
+              <i class="ri-delete-bin-line"></i>
+            </button>
+          </article>
+        }
+      </div>
+      <aside class="cart-summary">
+        <h2>Resumen</h2>
+        <p>
+          <span>Subtotal estimado</span
+          ><strong>{{ cart.subtotal() | currency: 'EUR' : 'symbol' : '1.0-2' }}</strong>
+        </p>
+        <small>Disponibilidad, entrega y forma de pago se confirman por WhatsApp.</small
+        ><a routerLink="/checkout" class="coq-button">Continuar pedido <span>→</span></a
+        ><button type="button" class="cart-clear" (click)="cart.clear()">Vaciar carrito</button>
+      </aside>
+    </section>
+  }
+</main>

@@ -1,0 +1,198 @@
+<section class="coq-hero">
+  <div class="coq-hero-copy">
+    <p class="coq-kicker">
+      {{ activeBanner()?.eyebrow || activeBanner()?.campaignType || 'Coquetería Africa' }}
+    </p>
+    <h1>
+      {{ activeBanner()?.title || 'Detalles que hacen tu día más' }}
+      <em>{{ activeBanner()?.highlightText || activeBanner()?.subtitle || 'lindo ♡' }}</em>
+    </h1>
+    <p class="coq-hero-description">
+      {{
+        activeBanner()?.description ||
+          'Accesorios, belleza y regalos hechos a mano, que hablan de ti.'
+      }}
+    </p>
+    <a [href]="activeBanner()?.buttonUrl || '/shop'" class="coq-button"
+      >{{ activeBanner()?.buttonText || 'Ver novedades' }} <span>→</span></a
+    >
+  </div>
+  <div class="coq-hero-art">
+    <picture
+      ><source
+        media="(max-width: 700px)"
+        [srcset]="
+          activeBanner()?.imageMobile
+            ? bannersService.fileUrl(activeBanner()!, activeBanner()!.imageMobile)
+            : 'assets/img/about-1.png'
+        " />
+      <img
+        [src]="
+          activeBanner()?.imageDesktop
+            ? bannersService.fileUrl(activeBanner()!, activeBanner()!.imageDesktop)
+            : 'assets/img/about-1.png'
+        "
+        alt="Inspiración de Coquetería Africa"
+    /></picture>
+  </div>
+  <span class="coq-hero-doodle coq-doodle-one">♡</span
+  ><span class="coq-hero-doodle coq-doodle-two">♡</span>
+</section>
+
+<section class="coq-benefits" aria-label="Valores de Coquetería Africa">
+  <article>
+    <i class="ri-hand-heart-line"></i>
+    <div><strong>Hecho a mano y con amor</strong><span>Creaciones cuidadas</span></div>
+  </article>
+  <article>
+    <i class="ri-gift-line"></i>
+    <div><strong>Detalles especiales</strong><span>Para cada ocasión</span></div>
+  </article>
+  <article>
+    <i class="ri-sparkling-2-line"></i>
+    <div><strong>Creaciones con personalidad</strong><span>Un toque único para ti</span></div>
+  </article>
+  <article>
+    <i class="ri-heart-3-line"></i>
+    <div><strong>Atención personalizada</strong><span>Estamos para ayudarte</span></div>
+  </article>
+</section>
+
+<section id="categorias" class="coq-categories coq-section">
+  <div class="coq-section-heading">
+    <p class="coq-kicker">Descubre</p>
+    <h2>Categorías favoritas</h2>
+  </div>
+  @if (categories().length) {
+    <div class="coq-category-track">
+      @for (category of categories(); track category.id; let index = $index) {
+        <a
+          class="coq-category"
+          [routerLink]="['/shop']"
+          [queryParams]="{ categoria: category.slug }"
+        >
+          <span class="coq-category-image"
+            ><img [src]="categoryImage(category, index)" [alt]="category.name" /></span
+          ><strong>{{ category.name }}</strong>
+        </a>
+      }
+    </div>
+  } @else {
+    <div class="coq-empty-categories">
+      <i class="ri-gallery-line"></i>
+      <p>Las categorías aparecerán cuando haya creaciones publicadas.</p>
+    </div>
+  }
+</section>
+
+<section class="coq-story-banner">
+  <div class="coq-story-copy">
+    <p class="coq-kicker">Hecho a mano</p>
+    <h2>Pequeños detalles<br /><em>Grandes historias ♡</em></h2>
+    <a routerLink="/shop" class="coq-button">Explorar ahora <span>→</span></a>
+  </div>
+  <img src="assets/img/about1.jpg" alt="Inspiración para crear momentos especiales" />
+</section>
+
+<section id="productos" class="coq-products coq-section">
+  <div class="coq-section-heading">
+    <p class="coq-kicker">Para ti</p>
+    <h2>Productos destacados</h2>
+    <p>Creaciones bonitas para acompañar tus momentos.</p>
+  </div>
+  @if (visibleProducts().length) {
+    <div class="coq-product-grid">
+      @for (product of visibleProducts(); track product.id) {
+        <article class="coq-product-card">
+          <div class="coq-product-image">
+            @if (product.image) {
+              <img [src]="productsService.fileUrl(product, product.image)" [alt]="product.name" />
+            }
+          </div>
+          <div class="coq-product-info">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.price | currency: 'EUR' : 'symbol' : '1.0-2' }}</p>
+            <div class="coq-product-actions">
+              <a
+                [routerLink]="['/shop', productsService.productSlug(product)]"
+                class="coq-product-button coq-product-button-detail"
+                ><i class="ri-eye-line" aria-hidden="true"></i> Ver detalle</a
+              >
+              <button
+                class="coq-product-button coq-product-button-cart"
+                type="button"
+                (click)="addToCart(product)"
+              >
+                <i class="ri-shopping-cart-2-line" aria-hidden="true"></i> Agregar al carrito
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <div class="coq-product-grid coq-product-preview-grid">
+      <article class="coq-product-card">
+        <div class="coq-product-image">
+          <img src="assets/img/product-img-44.png" alt="Creación destacada" />
+        </div>
+        <div class="coq-product-info">
+          <h3>Creación destacada</h3>
+          <p>Consulta disponibilidad</p>
+          <a routerLink="/" fragment="contacto" class="coq-product-button">Consultar</a>
+        </div>
+      </article>
+      <article class="coq-product-card">
+        <div class="coq-product-image">
+          <img src="assets/img/product-img-45.png" alt="Detalle especial" />
+        </div>
+        <div class="coq-product-info">
+          <h3>Detalle especial</h3>
+          <p>Consulta disponibilidad</p>
+          <a routerLink="/" fragment="contacto" class="coq-product-button">Consultar</a>
+        </div>
+      </article>
+      <article class="coq-product-card">
+        <div class="coq-product-image">
+          <img src="assets/img/product-img-46.png" alt="Creación con encanto" />
+        </div>
+        <div class="coq-product-info">
+          <h3>Creación con encanto</h3>
+          <p>Consulta disponibilidad</p>
+          <a routerLink="/" fragment="contacto" class="coq-product-button">Consultar</a>
+        </div>
+      </article>
+    </div>
+  }
+  <a routerLink="/shop" class="coq-outline-button">Ver todas las creaciones <span>→</span></a>
+</section>
+
+<section id="sobre-nosotros" class="coq-about coq-section">
+  <div class="coq-about-image">
+    <img src="assets/img/logocoqueteria.png" alt="Creación hecha a mano" />
+  </div>
+  <div class="coq-about-copy">
+    <p class="coq-kicker">Nuestra esencia</p>
+    <h2>Más que accesorios,<br /><em>es tu esencia ♡</em></h2>
+    <p>
+      Coquetería Africa es un espacio donde la creatividad, los colores y los pequeños detalles se
+      encuentran. Creamos con cariño para que cada elección hable de ti.
+    </p>
+    <a routerLink="/" fragment="contacto" class="coq-outline-button">Conócenos <span>→</span></a>
+  </div>
+</section>
+
+<section id="contacto" class="coq-instagram coq-section">
+  <div class="coq-section-heading">
+    <p class="coq-kicker">Síguenos</p>
+    <h2>Inspírate con nuestras creaciones</h2>
+    <p>Descubre más detalles y novedades en nuestro Instagram.</p>
+  </div>
+  <a
+    class="coq-button"
+    href="https://www.instagram.com/coqueteria.africa/"
+    target="_blank"
+    rel="noopener noreferrer"
+    >Síguenos en Instagram <span>→</span></a
+  >
+</section>
